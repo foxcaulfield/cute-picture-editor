@@ -1,4 +1,90 @@
-.App {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "image sidebar"
+    "slider sidebar";
+  height: 100vh;
+  width: 100vw;
+  background-color: #dadada;
+}
+
+.mainImage {
+  grid-area: image;
+  background-color: red;
+  background-image: url("https://picsum.photos/600/900");
+  width: 100%;
+  height: 100%;
+  background-position: top center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: hsl(265, 100%, 86%);
+  border-left: 1px solid hsl(265, 100%, 56%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.sidebarItem {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: hsl(265, 100%, 86%);
+  padding: 1rem;
+  position: relative;
+  transition: background-color 275ms;
+}
+
+.sidebarItem:hover,
+.sidebarItem:focus {
+  background-color: hsl(265, 100%, 76%);
+}
+
+.sidebarItem.active{
+  background-color: hsl(265, 100%, 66%);
+}
+
+.sidebarItem::after{
+  content: "";
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  bottom: 0;
+  height: 1px;
+  background-color: hsl(265, 100%, 46%); ;
+}
+
+.sidebarItem:last-child::after{
+display: none;
+}
+
+.sliderContainer {
+  grid-area: slider;
+  background-color: green;
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+.slider {
+  width: 100%;
+  cursor: pointer;
+}
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +121,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
