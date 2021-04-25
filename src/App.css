@@ -23,7 +23,9 @@ body {
 
 .mainImage {
   grid-area: image;
-  background-color: grey;
+  /* background-color: blue; */
+  /* background-color: grey; */
+  background-color: #dadada;
   /* background-image: url("https://picsum.photos/600/900"); */
   width: 100%;
   height: 100%;
@@ -35,8 +37,9 @@ body {
   align-items: center;
 }
 .canvas{
-  background-color: #dadada;
-  /* background:red */
+  /* background-color: #dadada; */
+  background:red;
+  padding: 0;
   /* width: 100%;
   height: 100% */
 }
