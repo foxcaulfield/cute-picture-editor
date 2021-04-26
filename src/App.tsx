@@ -121,10 +121,10 @@ function App() {
     });
   }
 
-  function handleResetOptions(){
+  function handleResetOptions() {
     setOptions(DEFAULT_OPTIONS);
   }
-  
+
   //handle save image from canvas(real)
   function handleSaveReal(isManual: any) {
     //manual trigger check
@@ -245,7 +245,6 @@ function App() {
 
       contextReal.drawImage(image, 0, 0, canvasReal.width, canvasReal.height);
 
-      
       //exp for wide images
       setIsImageOverflowHorizontal(isOverflowHorizontal(potentiallyOverflow));
       //exp
@@ -300,7 +299,10 @@ function App() {
   const [scale, setScale] = useState<any>(1);
 
   //is picture overflow horizontal
-  const [isImageOverflowHorizontal, setIsImageOverflowHorizontal] = useState<any>();
+  const [
+    isImageOverflowHorizontal,
+    setIsImageOverflowHorizontal,
+  ] = useState<any>();
 
   //function for detecting overflow horizontal
   function isOverflowHorizontal(element: any) {
@@ -327,7 +329,7 @@ function App() {
     // return element.current.scrollHeight > element.current.clientHeight || element.current.scrollWidth > element.current.clientWidth;
     return element.current.scrollHeight > element.current.clientHeight;
   }
-  
+
   //ref for div tht contains image
   const potentiallyOverflow = useRef<any>(null);
 
@@ -340,46 +342,82 @@ function App() {
   return (
     <div className="container">
       {/* <MainScreen/> */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          background: "white",
+          alignItems: "center"
+        }}
+      >
+        <div className="fileInput"><label>  <button
+            onClick={() => {
+              setIsDownloading(true);
+              handleSaveReal(true);
+            }}
+          >
+            SAVE ME
+          </button><p className="fileName"></p></label></div>
+        <div>Cute picture editor</div>
+        <div className="fileInput"><input
+                type="file"
+                id="fileBrowser"
+                onChange={loadFile}
+                // value=""
+                style={{ display: "inline-block" }}
+                className="chooseFile"
+                onClick={(e) => (e.currentTarget.value = "")}
+              />
+
+             
+              <label htmlFor="fileBrowser">
+                Open Image <p className="fileName"></p>
+              </label></div>
+      </div>
       <div className="imageAndScalingContainer">
         <div
           ref={potentiallyOverflow}
           className="view"
-
-
           style={{
             justifyContent: `${
-              isImageOverflowHorizontal === false && isImageOverflowVertical === false ? "center" : isImageOverflowHorizontal === false && isImageOverflowVertical === true ? "center" :
-              "flex-start"
+              isImageOverflowHorizontal === false &&
+              isImageOverflowVertical === false
+                ? "center"
+                : isImageOverflowHorizontal === false &&
+                  isImageOverflowVertical === true
+                ? "center"
+                : "flex-start"
             }`,
           }}
-          
-          
+
           // style={{
           //   justifyContent: `${
           //     scale > 1 && isImageOverflowHorizontal ? "flex-start" : "center"
           //   }`,
           // }}
         >
-
-
           <img
-                     style={{
+            style={{
               ...getImageStyle(),
               // maxWidth:"100%",
               transform: `scale(${scale})`,
               transformOrigin: `${
-                isImageOverflowHorizontal === false && isImageOverflowVertical === false
+                isImageOverflowHorizontal === false &&
+                isImageOverflowVertical === false
                   ? "center center"
-                  : isImageOverflowHorizontal === false && isImageOverflowVertical === true ? "top center" :
-                  isImageOverflowHorizontal === true && isImageOverflowVertical === false ? "left" :
-                  "top left"
-                  // : isImageOverflowHorizontal
-                  // ? "top left"
-                  // : "top center"
+                  : isImageOverflowHorizontal === false &&
+                    isImageOverflowVertical === true
+                  ? "top center"
+                  : isImageOverflowHorizontal === true &&
+                    isImageOverflowVertical === false
+                  ? "left"
+                  : "top left"
+                // : isImageOverflowHorizontal
+                // ? "top left"
+                // : "top center"
               }`,
             }}
-          
-          
             // style={{
             //   ...getImageStyle(),
             //   transform: `scale(${scale})`,
@@ -392,8 +430,6 @@ function App() {
             //   }`,
             // }}
 
-
-            
             // style={getImageStyle()}
             // className={"displayImage", {transform-origin: top left}}
             // style={{transform: scale(0.1)}}
@@ -401,37 +437,6 @@ function App() {
             id="thePicture"
             src={imgData.imgData}
           />
-        </div>
-        <div className="buttonsContainer">
-          <button
-            onClick={() => {
-              setIsDownloading(true);
-              handleSaveReal(true);
-            }}
-          >
-            SAVE ME
-          </button>
-          <button
-            onClick={() => {
-              setScale(scale * 1.1);
-            }}
-          >
-            +
-          </button>
-          <button onClick={() => setScale(scale * 0.9)}>-</button>
-          <button onClick={() => setScale(0.5)}>50%</button>
-          <button onClick={() => setScale(0.75)}>75%</button>
-          <button onClick={() => setScale(1)}>reset scale</button>
-          <button onClick={() => setScale(1.25)}>125%</button>
-          <button onClick={() => setScale(1.5)}>150%</button>
-          <button onClick={() => alert(isOverflowHorizontal(potentiallyOverflow))}>
-            check
-          </button>
-          <input type="range"  min="0.1" max="2" value={scale} step="0.01" onChange={(e)=>{console.log(e.target.value); setScale(e.target.value)}}/>
-          {/* <span>{scale}</span> */}
-          <p>isImageOverflowHorizontal {isImageOverflowHorizontal? "true" : "false"}</p>
-          <p>isImageOverflowVertical {isImageOverflowVertical? "true" : "false"}</p>
-          <button onClick={()=> handleResetOptions()}>reset options</button>
         </div>
       </div>
       <div className="controller">
@@ -453,6 +458,54 @@ function App() {
             width="0"
             height="0"
           ></canvas>
+        </div>
+        <div className="buttonsContainer">
+          {/* <button
+            onClick={() => {
+              setIsDownloading(true);
+              handleSaveReal(true);
+            }}
+          >
+            SAVE ME
+          </button> */}
+          <div>
+          <button onClick={() => setScale(scale * 0.9)}>-</button>
+          <input
+            type="range"
+            min="0.1"
+            max="2"
+            value={scale}
+            step="0.01"
+            onChange={(e) => {
+              console.log(e.target.value);
+              setScale(e.target.value);
+            }}
+          />
+<button
+            onClick={() => {
+              setScale(scale * 1.1);
+            }}
+          >
+            +
+          </button>
+          </div>
+          <div>
+          {/* <button onClick={() => setScale(0.5)}>50%</button>
+          <button onClick={() => setScale(0.75)}>75%</button> */}
+          <button onClick={() => setScale(1)}>reset scale</button>
+          {/* <button onClick={() => setScale(1.25)}>125%</button>
+          <button onClick={() => setScale(1.5)}>150%</button> */}
+          {/* <button
+            onClick={() => alert(isOverflowHorizontal(potentiallyOverflow))}
+          >
+            check
+          </button> */}
+         
+          {/* <span>{scale}</span> */}
+          {/* <span>isImageOverflowHorizontal {isImageOverflowHorizontal? "true" : "false"}</span>
+          <span>isImageOverflowVertical {isImageOverflowVertical? "true" : "false"}</span> */}
+          <button onClick={() => handleResetOptions()}>reset options</button>
+          </div>
         </div>
         <div className="sidebar">
           {options.map((option, index) => {
@@ -477,7 +530,7 @@ function App() {
           {/* #02 Define input with file type */}
           <div className="imageOption">
             {/* #03 load file and call the loadFile function */}
-            <div className="fileInput">
+            {/* <div className="fileInput">
               <input
                 type="file"
                 id="fileBrowser"
@@ -485,7 +538,7 @@ function App() {
                 // value=""
                 style={{ display: "inline-block" }}
                 className="chooseFile"
-                onClick={(e)=> e.currentTarget.value = ""}
+                onClick={(e) => (e.currentTarget.value = "")}
               />
 
               <br />
@@ -493,7 +546,7 @@ function App() {
                 {" "}
                 Upload Image <p className="fileName"></p>
               </label>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
