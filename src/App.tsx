@@ -124,18 +124,17 @@ function App() {
   }
 
   //exp
-  function handleSaveReal(isManual:any) {
+  function handleSaveReal(isManual: any) {
     // console.log(isDownloading);
     // if(isDownloading) {
 
-
-if (isManual){
-  alert("it is");
-  loadCanvas(imgData.imgData, isManual);
-} else {
-  alert("it is not");
-  loadCanvas(imgDataReal.imgDataReal, false);
-}
+    if (isManual) {
+      alert("it is");
+      loadCanvas(imgData.imgData, isManual);
+    } else {
+      alert("it is not");
+      loadCanvas(imgDataReal.imgDataReal, false);
+    }
 
     // }
 
@@ -253,47 +252,46 @@ if (isManual){
   }
   //exp
 
-
   // #11 fall into loadCanvas function
-  function loadCanvas(imgData: any, isManual?:any) {
+  function loadCanvas(imgData: any, isManual?: any) {
     // #12 define canvas and 2d context
     let canvas: any = resultCanvas.current;
     const context: any = canvas.getContext("2d");
 
     //exp
-  //   let memorizedCanvasReal;
-  //  let memorizedContextReal;
+    //   let memorizedCanvasReal;
+    //  let memorizedContextReal;
 
-  alert(isManual);
+    alert(isManual);
 
-  // if (isManual !== true) {
-  let canvasReal: any =  resultCanvasReal.current;
-  let contextReal: any = canvasReal.getContext("2d");
-  // }
-  if (!isManual) {
-    alert("not manual")
-  setMemorizedCanvasReal(canvasReal);
-  setMemorizedContextReal(contextReal);
-  }
-  if (isManual) {
-    alert(" manual")
-     canvasReal =  memorizedCanvasReal;
-     contextReal = memorizedContextReal;
-  }
-  //   if (isDownloading === false) {
-  // alert('false');
+    // if (isManual !== true) {
+    let canvasReal: any = resultCanvasReal.current;
+    let contextReal: any = canvasReal.getContext("2d");
+    // }
+    if (!isManual) {
+      alert("not manual");
+      setMemorizedCanvasReal(canvasReal);
+      setMemorizedContextReal(contextReal);
+    }
+    if (isManual) {
+      alert(" manual");
+      canvasReal = memorizedCanvasReal;
+      contextReal = memorizedContextReal;
+    }
+    //   if (isDownloading === false) {
+    // alert('false');
 
-  // let canvasReal: any = resultCanvasReal.current;
-  // const contextReal: any = canvasReal.getContext("2d");
-  //     setMemorizedCanvasReal(resultCanvasReal.current);
-  //     setMemorizedContextReal(canvasReal.getContext("2d"));
+    // let canvasReal: any = resultCanvasReal.current;
+    // const contextReal: any = canvasReal.getContext("2d");
+    //     setMemorizedCanvasReal(resultCanvasReal.current);
+    //     setMemorizedContextReal(canvasReal.getContext("2d"));
 
-  //   } else  {
-  // alert('else');
+    //   } else  {
+    // alert('else');
 
-  // let canvasReal= memorizedCanvasReal;
-  // const   contextReal = memorizedContextReal;
-  //   }
+    // let canvasReal= memorizedCanvasReal;
+    // const   contextReal = memorizedContextReal;
+    //   }
     //exp
 
     // resultCanvasReal.current.toDataURL("image/jpeg")
@@ -320,13 +318,10 @@ if (isManual){
       setImgDataReal({ imgDataReal: canvasReal.toDataURL("image/jpeg") });
       // canvasReal.toDataURL("image/jpeg").href;
 
-
       if (isManual) {
         aReal.current.click();
       }
 
-
-      
       console.log(`after set`);
 
       contextReal.restore();
@@ -405,8 +400,8 @@ if (isManual){
   const [isDownloading, setIsDownloading] = useState(false);
 
   const [memorizedCanvasReal, setMemorizedCanvasReal] = useState<any>();
-const [memorizedContextReal, setMemorizedContextReal] = useState<any>();
-  
+  const [memorizedContextReal, setMemorizedContextReal] = useState<any>();
+
   useEffect(() => {
     if (isDownloading === true) {
       // handleSaveReal();
@@ -416,83 +411,169 @@ const [memorizedContextReal, setMemorizedContextReal] = useState<any>();
 
     // download_img(imgDataReal);
     // alert("hey");
-  // }, [isDownloading]);
+    // }, [isDownloading]);
   }, [imgDataReal.imgDataReal]);
 
+  const [scale, setScale] = useState<any>(1);
+
+  const [isImageOverflow, setIsImageOverflow] = useState<any>()
+  
+  
+  
+  function isOverflown(element:any) {
+    console.log(element);
+    console.log(`element.scrollHeight`, element.current.scrollHeight);
+    console.log(`element.clientHeight`, element.current.clientHeight);
+    console.log(`element.scrollWidth`, element.current.scrollWidth);
+    console.log(`element.clientWidth`, element.current.clientWidth);
+    
+    // return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+    return element.current.scrollWidth > element.current.clientWidth;
+  }
+
+  const potentiallyOverflow = useRef<any>(null);
+
+  // var els:any = potentiallyOverflow;
+  
+  // for (let i = 0; i < els.length; i++) {
+  //   var el = els[i];
+  //   el.style.borderColor = (isOverflown(el) ? 'red' : 'green');
+  //   console.log("Element #" + i + " is " + (isOverflown(el) ? '' : 'not ') + "overflown.");
+  // }
+  
   return (
     <div className="container">
       {/* <MainScreen/> */}
-      <img hidden={true} id="thePicture" src={imgData.imgData} />
-      <a
-        hidden={true}
-        ref={aReal}
-        id="download"
-        download="myImage.jpg"
-        href={imgDataReal.imgDataReal}
+      <div className="imageAndScalingContainer">
+      {/* <div> */}
+        <div ref={potentiallyOverflow} className="view" style={{justifyContent: `${ scale>1 && isImageOverflow ?  "flex-start": "center"}`, 
+      }}>
 
-        // onClick={() => download_img(imgDataReal)}
-      >
-        Download to myImage.jpg
-      </a>
-      <button
-        onClick={() => {
-          setIsDownloading(true);
-          handleSaveReal(true);
-        }}
-      >
-        SAVE ME
-      </button>
-      <div className="mainImage">
-        {" "}
-        <canvas
-          className="canvas"
-          ref={resultCanvas}
-          style={getImageStyle()}
-          width="0"
-          height="0"
-        ></canvas>
-      </div>
-      <div className="sidebar">
-        {options.map((option, index) => {
-          return (
-            <SidebarItem
-              key={index}
-              name={option.name}
-              active={index === selectedOptionIndex}
-              handleClick={() => setSelectedOptionIndex(index)}
-            />
-          );
-        })}
-        {/* <SidebarItem /> */}
-      </div>
-      <Slider
-        min={selectedOption.range.min}
-        max={selectedOption.range.max}
-        value={selectedOption.value}
-        handleChange={handleSliderChange}
-      />
-      <div>
-        {/* #02 Define input with file type */}
-        <div className="imageOption">
-          {/* #03 load file and call the loadFile function */}
-          <div className="fileInput">
-            <input
-              type="file"
-              id="fileBrowser"
-              onChange={loadFile}
-              style={{ display: "inline-block" }}
-              className="chooseFile"
-            />
 
-            <br />
-            <label htmlFor="fileBrowser">
-              {" "}
-              Upload Image <p className="fileName"></p>
-            </label>
+
+
+          {/* <div
+        className="viewImage"
+          // style={{
+          //   // width: "100%",
+          //   // height: "200px",
+          //   background: "green",
+          //   overflow: "scroll",
+          // }}
+        > */}
+          <img
+            style={{ ...getImageStyle(), transform: `scale(${scale})`, transformOrigin: `${scale< 1? "center center" : scale>1 && isImageOverflow ? "top left" : "top center"}` }}
+            // style={getImageStyle()}
+            // className={"displayImage", {transform-origin: top left}}
+            // style={{transform: scale(0.1)}}
+            hidden={false}
+            id="thePicture"
+            src={imgData.imgData}
+          />
+          {/* </div> */}
+        </div>
+        <div className="buttonsContainer">
+        <button
+          onClick={() => {
+            setIsDownloading(true);
+            handleSaveReal(true);
+          }}
+        >
+          SAVE ME
+        </button>
+        <button onClick={() => {setScale(scale + 0.1);
+        setIsImageOverflow(isOverflown(potentiallyOverflow))
+        }}>+</button>
+        <button onClick={() => setScale(scale - 0.1)}>-</button>
+        <button onClick={() => setScale(0.5)}>50%</button>
+        <button onClick={() => setScale(0.75)}>75%</button>
+        <button onClick={() => setScale(1)}>reset scale</button>
+        <button onClick={() => setScale(1.25)}>125%</button>
+        <button onClick={() => setScale(1.5)}>150%</button>
+        <button onClick={()=> alert(isOverflown(potentiallyOverflow))}>check</button>
+
+        </div>
+      </div>
+      <div className="controller">
+        <a
+          hidden={true}
+          ref={aReal}
+          id="download"
+          download="myImage.jpg"
+          href={imgDataReal.imgDataReal}
+
+          // onClick={() => download_img(imgDataReal)}
+        >
+          Download to myImage.jpg
+        </a>
+        {/* <button
+          onClick={() => {
+            setIsDownloading(true);
+            handleSaveReal(true);
+          }}
+        >
+          SAVE ME
+        </button>
+        <button onClick={() => setScale(scale + 0.1)}>+</button>
+        <button onClick={() => setScale(scale - 0.1)}>-</button>
+        <button onClick={() => setScale(0.5)}>50%</button>
+        <button onClick={() => setScale(0.75)}>75%</button>
+        <button onClick={() => setScale(1)}>reset scale</button>
+        <button onClick={() => setScale(1.25)}>125%</button>
+        <button onClick={() => setScale(1.5)}>150%</button> */}
+
+        <div className="mainImage">
+          {" "}
+          <canvas
+            hidden={true}
+            className="canvas"
+            ref={resultCanvas}
+            style={getImageStyle()}
+            width="0"
+            height="0"
+          ></canvas>
+        </div>
+        <div className="sidebar">
+          {options.map((option, index) => {
+            return (
+              <SidebarItem
+                key={index}
+                name={option.name}
+                active={index === selectedOptionIndex}
+                handleClick={() => setSelectedOptionIndex(index)}
+              />
+            );
+          })}
+          {/* <SidebarItem /> */}
+        </div>
+        <Slider
+          min={selectedOption.range.min}
+          max={selectedOption.range.max}
+          value={selectedOption.value}
+          handleChange={handleSliderChange}
+        />
+        <div>
+          {/* #02 Define input with file type */}
+          <div className="imageOption">
+            {/* #03 load file and call the loadFile function */}
+            <div className="fileInput">
+              <input
+                type="file"
+                id="fileBrowser"
+                onChange={loadFile}
+                style={{ display: "inline-block" }}
+                className="chooseFile"
+              />
+
+              <br />
+              <label htmlFor="fileBrowser">
+                {" "}
+                Upload Image <p className="fileName"></p>
+              </label>
+            </div>
           </div>
         </div>
       </div>
-
       <canvas
         hidden={true}
         className="canvasReal"
