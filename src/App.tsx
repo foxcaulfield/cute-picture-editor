@@ -440,6 +440,11 @@ function App() {
   //   el.style.borderColor = (isOverflown(el) ? 'red' : 'green');
   //   console.log("Element #" + i + " is " + (isOverflown(el) ? '' : 'not ') + "overflown.");
   // }
+   
+  useEffect(() => {
+    setIsImageOverflow(isOverflown(potentiallyOverflow))
+  
+  }, [scale])
   
   return (
     <div className="container">
@@ -482,7 +487,7 @@ function App() {
           SAVE ME
         </button>
         <button onClick={() => {setScale(scale + 0.1);
-        setIsImageOverflow(isOverflown(potentiallyOverflow))
+        // setIsImageOverflow(isOverflown(potentiallyOverflow))
         }}>+</button>
         <button onClick={() => setScale(scale - 0.1)}>-</button>
         <button onClick={() => setScale(0.5)}>50%</button>
