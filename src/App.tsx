@@ -3,6 +3,13 @@ import "./App.css";
 import MainScreen from "./components/MainScreen/MainScreen";
 import Slider from "./components/Slider/Slider";
 import SidebarItem from "./components/SidebarItem/SidebarItem";
+import { Button, IconButton } from "@material-ui/core";
+import SaveIcon from "@material-ui/icons/Save";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import ZoomInIcon from "@material-ui/icons/ZoomIn";
+import ZoomOutIcon from '@material-ui/icons/ZoomOut';
+// import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+// import Icon from '@material-ui/core/Icon';
 
 type DefaultOptionsType = Array<OptionType>;
 
@@ -348,32 +355,73 @@ function App() {
           flexDirection: "row",
           justifyContent: "space-between",
           background: "white",
-          alignItems: "center"
+          alignItems: "center",
+          padding: "0.5em",
         }}
       >
-        <div className="fileInput"><label>  <button
+        {/* <button
             onClick={() => {
               setIsDownloading(true);
               handleSaveReal(true);
             }}
+            // className="buttonCasual"
           >
             SAVE ME
-          </button><p className="fileName"></p></label></div>
-        <div>Cute picture editor</div>
-        <div className="fileInput"><input
-                type="file"
-                id="fileBrowser"
-                onChange={loadFile}
-                // value=""
-                style={{ display: "inline-block" }}
-                className="chooseFile"
-                onClick={(e) => (e.currentTarget.value = "")}
-              />
+          </button> */}
 
-             
-              <label htmlFor="fileBrowser">
-                Open Image <p className="fileName"></p>
-              </label></div>
+        <Button
+          variant="contained"
+          // color="primary"
+          size="large"
+          className="gradientButton"
+          // style={{marginLeft: "1em"}}
+          // className={classes.button}
+          startIcon={<SaveIcon />}
+          onClick={() => {
+            setIsDownloading(true);
+            handleSaveReal(true);
+          }}
+        >
+          Save
+        </Button>
+
+        <div className="headerName">Cute picture editor</div>
+        {/* <div className="fileInput"> */}
+        <input
+          type="file"
+          id="fileBrowser"
+          onChange={loadFile}
+          hidden={true}
+          // value=""
+          // style={{ display: "inline-block" }}
+          // className="chooseFile"
+          onClick={(e) => (e.currentTarget.value = "")}
+        />
+
+        {/* <Button
+        variant="contained"
+        color="default"
+        className={classes.button}
+        startIcon={<CloudUploadIcon />}
+      >
+        Upload
+      </Button> */}
+
+        <label htmlFor="fileBrowser" style={{ display: "block" }}>
+          {/* Open Image  */}
+          <Button
+            variant="contained"
+            color="default"
+            style={{ pointerEvents: "none" }}
+            size="large"
+            // className={classes.button}
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload
+          </Button>
+          {/* <p className="fileName"></p> */}
+        </label>
+        {/* </div> */}
       </div>
       <div className="imageAndScalingContainer">
         <div
@@ -468,43 +516,82 @@ function App() {
           >
             SAVE ME
           </button> */}
-          <div>
-          <button onClick={() => setScale(scale * 0.9)}>-</button>
-          <input
-            type="range"
-            min="0.1"
-            max="2"
-            value={scale}
-            step="0.01"
-            onChange={(e) => {
-              console.log(e.target.value);
-              setScale(e.target.value);
-            }}
-          />
-<button
-            onClick={() => {
-              setScale(scale * 1.1);
-            }}
-          >
-            +
-          </button>
+          <div style={{display: "flex", flexDirection: "row"}}>
+          {/* <Icon>add_circle</Icon> */}
+<IconButton size="small">
+<ZoomOutIcon onClick={() => setScale(scale * 0.9)}/>
+</IconButton>
+            {/* <Button
+              variant="contained"
+              color="default"
+              size="small"
+              onClick={() => setScale(scale * 0.9)}
+            >
+              -
+            </Button> */}
+            <input
+              type="range"
+              min="0.1"
+              max="2"
+              value={scale}
+              step="0.01"
+              onChange={(e) => {
+                console.log(e.target.value);
+                setScale(e.target.value);
+              }}
+              className="magic"
+            />
+            <IconButton size="small">
+            <ZoomInIcon onClick={() => {
+                setScale(scale * 1.1);
+              }}/>
+              </IconButton>
+            {/* <Button
+              onClick={() => {
+                setScale(scale * 1.1);
+              }}
+              variant="contained"
+              color="default"
+              size="small"
+            >
+              +
+            </Button> */}
           </div>
           <div>
-          {/* <button onClick={() => setScale(0.5)}>50%</button>
+            {/* <button onClick={() => setScale(0.5)}>50%</button>
           <button onClick={() => setScale(0.75)}>75%</button> */}
-          <button onClick={() => setScale(1)}>reset scale</button>
-          {/* <button onClick={() => setScale(1.25)}>125%</button>
+            {/* <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              
+              // className="gradientButton"
+              onClick={() => setScale(1)}
+              style={{letterSpacing: "0.1em", color: "black"}}
+            >
+              reset scale
+            </Button> */}
+            {/* <button onClick={() => setScale(1.25)}>125%</button>
           <button onClick={() => setScale(1.5)}>150%</button> */}
-          {/* <button
+            {/* <button
             onClick={() => alert(isOverflowHorizontal(potentiallyOverflow))}
           >
             check
           </button> */}
-         
-          {/* <span>{scale}</span> */}
-          {/* <span>isImageOverflowHorizontal {isImageOverflowHorizontal? "true" : "false"}</span>
+
+            {/* <span>{scale}</span> */}
+            {/* <span>isImageOverflowHorizontal {isImageOverflowHorizontal? "true" : "false"}</span>
           <span>isImageOverflowVertical {isImageOverflowVertical? "true" : "false"}</span> */}
-          <button onClick={() => handleResetOptions()}>reset options</button>
+            {/* <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              // className="gradientButton"
+              onClick={() => handleResetOptions()}
+              style={{letterSpacing: "0.1em", color: "black"}}
+            >
+              reset options
+            </Button> */}
           </div>
         </div>
         <div className="sidebar">
@@ -520,12 +607,40 @@ function App() {
           })}
           {/* <SidebarItem /> */}
         </div>
+        <div style={{display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
+          <div style={{width: "100%"}}>
         <Slider
           min={selectedOption.range.min}
           max={selectedOption.range.max}
           value={selectedOption.value}
           handleChange={handleSliderChange}
         />
+        </div>
+        <div style={{display:"flex", flexDirection: "column", flexWrap: "nowrap",background: "white", justifyContent: "space-evenly"}}>
+        <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              
+              // className="gradientButton"
+              onClick={() => setScale(1)}
+              style={{letterSpacing: "0.1em", color: "black", whiteSpace: "nowrap"}}
+            >
+              reset scale
+            </Button>
+            
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              // className="gradientButton"
+              onClick={() => handleResetOptions()}
+              style={{letterSpacing: "0.1em", color: "black", whiteSpace: "nowrap"}}
+            >
+              reset options
+            </Button>
+        </div>
+        </div>
         <div>
           {/* #02 Define input with file type */}
           <div className="imageOption">
