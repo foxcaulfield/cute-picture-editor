@@ -39,7 +39,15 @@ body {
 
   background: linear-gradient(94.75deg, rgb(5, 157, 255) 0%, rgb(101, 73, 213) 43.66%, rgb(227, 63, 161) 64.23%, rgb(246, 79, 86) 80.09%, rgb(251, 83, 67) 83.76%, rgb(253, 123, 66) 100%);
 
-  background: -webkit-linear-gradient(14deg, rgba(167,200,242,1) 23%, rgba(242,80,80,1) 100%);
+  /* background: -webkit-linear-gradient(14deg, rgba(167,200,242,1) 23%, rgba(242,80,80,1) 100%); */
+}
+
+.gradientButtonUpload {
+
+
+  background: linear-gradient(94.75deg, rgb(106, 155, 26) 0%, rgb(173, 255, 47) 43.66%, rgb(227, 205, 40) 64.23%, rgb(248, 93, 21) 80.09%, rgb(240, 30, 58)  100%);
+
+  /* background: -webkit-linear-gradient(14deg, rgba(167,200,242,1) 23%, rgba(242,80,80,1) 100%); */
 }
 
 
@@ -124,7 +132,7 @@ input:focus + label {
   border-left: 1px solid hsl(265, 100%, 56%);
   display: flex;
   flex-wrap: wrap;
-
+/* font-size: 2em; */
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
@@ -138,6 +146,8 @@ input:focus + label {
   padding: 1rem;
   position: relative;
   transition: background-color 275ms;
+font-size: 1.25em;
+
 }
 
 .sidebarItem:hover,
