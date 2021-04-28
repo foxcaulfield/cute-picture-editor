@@ -8,8 +8,6 @@ import SaveIcon from "@material-ui/icons/Save";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import ZoomInIcon from "@material-ui/icons/ZoomIn";
 import ZoomOutIcon from "@material-ui/icons/ZoomOut";
-// import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-// import Icon from '@material-ui/core/Icon';
 
 type DefaultOptionsType = Array<OptionType>;
 
@@ -140,7 +138,6 @@ function App() {
     } else {
       loadCanvas(imgDataReal.imgDataReal, false);
     }
-    // console.log(`imgDataReal.imgDataReal`, imgDataReal.imgDataReal);
   }
 
   //get current style
@@ -150,7 +147,6 @@ function App() {
     });
     return { filter: filters.join(" ") };
   }
-  // console.log(getImageStyle());
 
   // #04 fall into fileLoad function
   function loadFile(e: any) {
@@ -177,43 +173,6 @@ function App() {
     }
   }
 
-  // #12.1 define function to fit canvas to container
-  function fitToContainerBefore(canvas: any, image: any) {
-    canvas.style.height = "100%";
-    canvas.style.width = `100%`;
-
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    //for tall images
-    if (image.width / image.height < 1) {
-      if (image.width / image.height > canvas.width / canvas.height) {
-        alert("here");
-        canvas.style.width = canvas.offsetWidth;
-        canvas.style.height = `${
-          (((image.height / image.width) * canvas.width) / canvas.height) * 100
-        }%`;
-      } else {
-        canvas.style.width = `${
-          ((canvas.height * (image.width / image.height)) / canvas.width) * 100
-        }%`;
-      }
-
-      //for wide pictures
-    } else if (image.width / image.height > 1) {
-      if (image.height / image.width > canvas.height / canvas.width) {
-        canvas.style.height = canvas.offsetHeight;
-        canvas.style.width = `${
-          ((canvas.height * (image.width / image.height)) / canvas.width) * 100
-        }%`;
-      } else {
-        canvas.style.height = `${
-          (((image.height / image.width) * canvas.width) / canvas.height) * 100
-        }%`;
-      }
-    }
-  }
-
   function fitToContainerReal(canvas: any, image: any) {
     canvas.width = image.width;
     canvas.height = image.height;
@@ -222,9 +181,6 @@ function App() {
   // #11 fall into loadCanvas function
   function loadCanvas(imgData: any, isManual?: any) {
     // #12 define canvas and 2d context
-    // let canvas: any = resultCanvas.current;
-    // const context: any = canvas.getContext("2d");
-
     let canvasReal: any = resultCanvasReal.current;
     let contextReal: any = canvasReal.getContext("2d");
 
@@ -246,7 +202,6 @@ function App() {
       contextReal.save();
 
       fitToContainerReal(canvasReal, image);
-      // console.log(getImageStyle().filter);
 
       contextReal.filter = getImageStyle().filter;
 
@@ -254,7 +209,6 @@ function App() {
 
       //exp for wide images
       setIsImageOverflowHorizontal(isOverflowHorizontal(potentiallyOverflow));
-      //exp
 
       setImgDataReal({ imgDataReal: canvasReal.toDataURL("image/jpeg") });
       // canvasReal.toDataURL("image/jpeg").href;
@@ -265,19 +219,6 @@ function App() {
       }
 
       contextReal.restore();
-
-      // context.clearRect(0, 0, canvas.width, canvas.height);
-      // let imgSize = {
-      //   width: image.width,
-      //   height: image.height,
-      // };
-
-      // context.save();
-
-      // fitToContainerBefore(canvas, image);
-
-      // context.drawImage(image, 0, 0, canvas.width, canvas.height);
-      // context.restore();
 
       canvasReal.toDataURL("image/jpeg");
     };
@@ -313,27 +254,14 @@ function App() {
 
   //function for detecting overflow horizontal
   function isOverflowHorizontal(element: any) {
-    // console.log(element);
-    // console.log(`element.scrollHeight`, element.current.scrollHeight);
-    // console.log(`element.clientHeight`, element.current.clientHeight);
-    // console.log(`element.scrollWidth`, element.current.scrollWidth);
-    // console.log(`element.clientWidth`, element.current.clientWidth);
-
-    // return element.current.scrollHeight > element.current.clientHeight || element.current.scrollWidth > element.current.clientWidth;
     return element.current.scrollWidth > element.current.clientWidth;
   }
 
   //is picture overflow horizontal
   const [isImageOverflowVertical, setIsImageOverflowVertical] = useState<any>();
+
   //function for detecting overflow vertical
   function isOverflowVertical(element: any) {
-    // console.log(element);
-    // console.log(`element.scrollHeight`, element.current.scrollHeight);
-    // console.log(`element.clientHeight`, element.current.clientHeight);
-    // console.log(`element.scrollWidth`, element.current.scrollWidth);
-    // console.log(`element.clientWidth`, element.current.clientWidth);
-
-    // return element.current.scrollHeight > element.current.clientHeight || element.current.scrollWidth > element.current.clientWidth;
     return element.current.scrollHeight > element.current.clientHeight;
   }
 
@@ -361,11 +289,8 @@ function App() {
       >
         <Button
           variant="contained"
-          // color="primary"
           size="large"
           className="gradientButton"
-          // style={{marginLeft: "1em"}}
-          // className={classes.button}
           startIcon={<SaveIcon />}
           onClick={() => {
             setIsDownloading(true);
@@ -382,9 +307,6 @@ function App() {
           id="fileBrowser"
           onChange={loadFile}
           hidden={true}
-          // value=""
-          // style={{ display: "inline-block" }}
-          // className="chooseFile"
           onClick={(e) => (e.currentTarget.value = "")}
         />
 
@@ -395,7 +317,6 @@ function App() {
           {/* Open Image  */}
           <Button
             variant="contained"
-            // color="primary"
             style={{ pointerEvents: "none" }}
             size="large"
             className="gradientButtonUpload"
@@ -437,9 +358,6 @@ function App() {
                     isImageOverflowVertical === false
                   ? "left"
                   : "top left"
-                // : isImageOverflowHorizontal
-                // ? "top left"
-                // : "top center"
               }`,
             }}
             hidden={false}
@@ -458,16 +376,7 @@ function App() {
         >
           Download to myImage.jpg
         </a>
-        <div className="mainImage">
-          {/* <canvas
-            hidden={true}
-            className="canvas"
-            ref={resultCanvas}
-            style={getImageStyle()}
-            width="0"
-            height="0"
-          ></canvas> */}
-        </div>
+        <div className="mainImage"></div>
         <div className="buttonsContainer">
           <div style={{ display: "flex", flexDirection: "row" }}>
             {/* <Icon>add_circle</Icon> */}
@@ -485,7 +394,7 @@ function App() {
                 console.log(e.target.value);
                 setScale(e.target.value);
               }}
-              className="magic"
+        
             />
             <IconButton size="small">
               <ZoomInIcon
@@ -538,7 +447,6 @@ function App() {
               variant="contained"
               color="secondary"
               size="small"
-              // className="gradientButton"
               onClick={() => setScale(1)}
               style={{
                 letterSpacing: "0.1em",
@@ -553,7 +461,6 @@ function App() {
               variant="contained"
               color="primary"
               size="small"
-              // className="gradientButton"
               onClick={() => handleResetOptions()}
               style={{
                 letterSpacing: "0.1em",
@@ -567,18 +474,13 @@ function App() {
         </div>
         <div>
           {/* #02 Define input with file type */}
-          <div className="imageOption">
-            {/* #03 load file and call the loadFile function */}
-          </div>
+
         </div>
       </div>
       <canvas
         hidden={true}
         className="canvasReal"
         ref={resultCanvasReal}
-        // style={getImageStyle()}
-        // width="0"
-        // height="0"
       ></canvas>
     </div>
   );
