@@ -22,6 +22,14 @@ type OptionType = {
   unit: string;
 };
 
+type ImgDataRealType = {
+  imgDataReal: string | undefined;
+};
+
+type ImgDataType = {
+  imgData: any
+};
+
 const DEFAULT_OPTIONS: DefaultOptionsType = [
   {
     name: "Brightness",
@@ -95,20 +103,20 @@ const DEFAULT_OPTIONS: DefaultOptionsType = [
   },
 ];
 
+// type SetOptionsType = Array<DefaultOptionsType>;
+
 function App() {
   // #10 define ref for canvas (and set in attributes in JSX)
-  const resultCanvas = useRef<HTMLCanvasElement>(null);
-
-  //exp
   const resultCanvasReal = useRef<HTMLCanvasElement>(null);
-  const [imgDataReal, setImgDataReal] = useState<any>({});
-  //exp
+  const [imgDataReal, setImgDataReal] = useState<ImgDataRealType>({
+    imgDataReal: undefined,
+  });
 
   //set image data in base64 format
-  const [imgData, setImgData] = useState<any>({});
+  const [imgData, setImgData] = useState<ImgDataType>({ imgData: undefined});
 
   //set default selected edit option
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(0);
 
   //set options for sidebar
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
@@ -394,7 +402,6 @@ function App() {
                 console.log(e.target.value);
                 setScale(e.target.value);
               }}
-        
             />
             <IconButton size="small">
               <ZoomInIcon
@@ -472,10 +479,7 @@ function App() {
             </Button>
           </div>
         </div>
-        <div>
-          {/* #02 Define input with file type */}
-
-        </div>
+        <div>{/* #02 Define input with file type */}</div>
       </div>
       <canvas
         hidden={true}
