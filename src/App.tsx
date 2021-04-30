@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import MainScreen from "./components/MainScreen/MainScreen";
 import Slider from "./components/Slider/Slider";
@@ -12,22 +12,22 @@ import ZoomOutIcon from "@material-ui/icons/ZoomOut";
 type DefaultOptionsType = Array<OptionType>;
 
 type OptionType = {
-  name: string;
-  property: string;
-  value: number;
+  name: number | string;
+  property:number | string;
+  value: number | string;
   range: {
-    min: number;
-    max: number;
+    min: number | string;
+    max: number | string;
   };
-  unit: string;
+  unit: number | string;
 };
 
 type ImgDataRealType = {
-  imgDataReal: string | undefined;
+  imgDataReal: string | undefined | ArrayBuffer | null;
 };
 
 type ImgDataType = {
-  imgData: any
+  imgData: string | undefined | ArrayBuffer | null;
 };
 
 const DEFAULT_OPTIONS: DefaultOptionsType = [
@@ -113,7 +113,7 @@ function App() {
   });
 
   //set image data in base64 format
-  const [imgData, setImgData] = useState<ImgDataType>({ imgData: undefined});
+  const [imgData, setImgData] = useState<ImgDataType>({ imgData: undefined });
 
   //set default selected edit option
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(0);
@@ -125,21 +125,29 @@ function App() {
   const selectedOption = options[selectedOptionIndex];
 
   //handle slider change
-  function handleSliderChange(props: any) {
-    setOptions((prevOptions) => {
-      return prevOptions.map((option, index) => {
+  function handleSliderChange(props: React.ChangeEvent<HTMLInputElement> | null) {
+    console.log(props)
+    setOptions((prevOptions : DefaultOptionsType) => {
+      return prevOptions.map((option:   {name: number | string;
+        property: number | string;
+        value: number | string;
+        range: {
+          min: number| string;
+          max: number| string;
+        };
+        unit: string| number;}, index : number) => {
         if (index !== selectedOptionIndex) return option;
-        return { ...option, value: props.target.value };
+        return { ...option, value: props!.target.value };
       });
     });
   }
 
   function handleResetOptions() {
-    setOptions(DEFAULT_OPTIONS);
+    setOptions(DEFAULT_OPTIONS as []);
   }
 
   //handle save image from canvas(real)
-  function handleSaveReal(isManual: any) {
+  function handleSaveReal(isManual: boolean) {
     //manual trigger check
     if (isManual) {
       loadCanvas(imgData.imgData, isManual);
@@ -157,9 +165,9 @@ function App() {
   }
 
   // #04 fall into fileLoad function
-  function loadFile(e: any) {
+  function loadFile(e: React.ChangeEvent<HTMLInputElement> | null) {
     // #05 assign our file to variable
-    let file = e.target.files[0];
+    let file = e!.target!.files![0];
 
     //  #06 define FileReader
     let reader = new FileReader();
@@ -181,16 +189,19 @@ function App() {
     }
   }
 
-  function fitToContainerReal(canvas: any, image: any) {
+  function fitToContainerReal(canvas: HTMLCanvasElement, image: HTMLImageElement ) {
     canvas.width = image.width;
     canvas.height = image.height;
   }
 
   // #11 fall into loadCanvas function
-  function loadCanvas(imgData: any, isManual?: any) {
+  function loadCanvas(
+    imgData: string | ArrayBuffer | null | undefined,
+    isManual?: boolean
+  ) {
     // #12 define canvas and 2d context
-    let canvasReal: any = resultCanvasReal.current;
-    let contextReal: any = canvasReal.getContext("2d");
+    let canvasReal = resultCanvasReal.current as HTMLCanvasElement;
+    let contextReal = canvasReal.getContext("2d") as CanvasRenderingContext2D;
 
     //check for manual trigger, if false - set "initial" canvas(image) state
     if (!isManual) {
@@ -198,8 +209,8 @@ function App() {
       setMemorizedContextReal(contextReal);
     }
     if (isManual) {
-      canvasReal = memorizedCanvasReal;
-      contextReal = memorizedContextReal;
+      canvasReal  = memorizedCanvasReal as HTMLCanvasElement;
+      contextReal  = memorizedContextReal as CanvasRenderingContext2D;
     }
 
     // #13 set image to canvas
@@ -223,7 +234,7 @@ function App() {
 
       //"save" option
       if (isManual) {
-        aReal.current.click();
+        aReal!.current!.click();
       }
 
       contextReal.restore();
@@ -231,18 +242,18 @@ function App() {
       canvasReal.toDataURL("image/jpeg");
     };
 
-    image.src = imgData;
+    image.src = imgData as string;
   }
 
   //ref for anchor
-  const aReal = useRef<any>(null);
+  const aReal = useRef<HTMLAnchorElement | null>(null);
 
   //is picture downloading now
   const [isDownloading, setIsDownloading] = useState(false);
 
   //"initial" state for canvas and context
-  const [memorizedCanvasReal, setMemorizedCanvasReal] = useState<any>();
-  const [memorizedContextReal, setMemorizedContextReal] = useState<any>();
+  const [memorizedCanvasReal, setMemorizedCanvasReal] = useState<HTMLCanvasElement | undefined>();
+  const [memorizedContextReal, setMemorizedContextReal] = useState<CanvasRenderingContext2D | undefined>();
 
   //set isDowloading to false for next render
   useEffect(() => {
@@ -252,29 +263,29 @@ function App() {
   }, [imgDataReal.imgDataReal]);
 
   //current scale
-  const [scale, setScale] = useState<any>(1);
+  const [scale, setScale] = useState<number | string>(1);
 
   //is picture overflow horizontal
   const [
     isImageOverflowHorizontal,
     setIsImageOverflowHorizontal,
-  ] = useState<any>();
+  ] = useState<boolean | null>();
 
   //function for detecting overflow horizontal
-  function isOverflowHorizontal(element: any) {
-    return element.current.scrollWidth > element.current.clientWidth;
+  function isOverflowHorizontal(element: React.RefObject<HTMLDivElement>) {
+    return element.current!.scrollWidth > element.current!.clientWidth;
   }
 
   //is picture overflow horizontal
-  const [isImageOverflowVertical, setIsImageOverflowVertical] = useState<any>();
+  const [isImageOverflowVertical, setIsImageOverflowVertical] = useState<boolean | null>();
 
   //function for detecting overflow vertical
-  function isOverflowVertical(element: any) {
-    return element.current.scrollHeight > element.current.clientHeight;
+  function isOverflowVertical(element: React.RefObject<HTMLDivElement>) {
+    return element.current!.scrollHeight > element.current!.clientHeight;
   }
 
   //ref for div tht contains image
-  const potentiallyOverflow = useRef<any>(null);
+  const potentiallyOverflow = useRef<null>(null);
 
   //set actual isOverflowHorizontal value when scale is changing
   useEffect(() => {
@@ -370,7 +381,7 @@ function App() {
             }}
             hidden={false}
             id="thePicture"
-            src={imgData.imgData}
+            src={imgData.imgData as string}
           />
         </div>
       </div>
@@ -380,7 +391,7 @@ function App() {
           ref={aReal}
           id="download"
           download="myImage.jpg"
-          href={imgDataReal.imgDataReal}
+          href={imgDataReal.imgDataReal as string}
         >
           Download to myImage.jpg
         </a>
@@ -389,7 +400,7 @@ function App() {
           <div style={{ display: "flex", flexDirection: "row" }}>
             {/* <Icon>add_circle</Icon> */}
             <IconButton size="small">
-              <ZoomOutIcon onClick={() => setScale(scale * 0.9)} />
+              <ZoomOutIcon onClick={() => setScale(scale as number * 0.9)} />
             </IconButton>
 
             <input
@@ -406,7 +417,7 @@ function App() {
             <IconButton size="small">
               <ZoomInIcon
                 onClick={() => {
-                  setScale(scale * 1.1);
+                  setScale(scale as number * 1.1);
                 }}
               />
             </IconButton>
@@ -418,7 +429,7 @@ function App() {
             return (
               <SidebarItem
                 key={index}
-                name={option.name}
+                name={option.name as string}
                 active={index === selectedOptionIndex}
                 handleClick={() => setSelectedOptionIndex(index)}
               />
