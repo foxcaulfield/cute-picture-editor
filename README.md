@@ -1,24 +1,30 @@
 # 🎨 Cute picture editor ✨
 
 ## About
+
 Basic and cute picture editor built with React, Typescript and Canvas 😏
 
 ## Screenshots
- **Browser** | **Smartphones 📱**
- --- | ---
-![](./screenshots/screenshotMain.png) | ![](./screenshots/screenshotMainMobile.png)
+
+**Browser** & **Smartphones 📱**
+
+<p float="left">
+  <img src="./screenshots/screenshotMain.png" height="100" />
+  <img src="./screenshots/screenshotMainMobile.png" height="100" /> 
+</p>
 
 ## Demo
 
-Try live version on [GitHub-Pages](https://foxcaulfield.github.io/cute-picture-editor/)
+Try live version on
+[GitHub-Pages](https://foxcaulfield.github.io/cute-picture-editor/)
 
 ## Technologies, libraries & services
 
 Built with:
 
--React
--TypeScript
--Canvas
+- React
+- TypeScript
+- Canvas
 
 ## Features
 
