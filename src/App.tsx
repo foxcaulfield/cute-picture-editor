@@ -297,14 +297,16 @@ function App() {
     <div className="container">
       {/* <MainScreen/> */}
       <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          background: "white",
-          alignItems: "center",
-          padding: "0.5em",
-        }}
+      className="headerContainer"
+        // style={{
+        //   display: "flex",
+        //   flexDirection: "row",
+        //   justifyContent: "space-between",
+        //   background: "white",
+        //   alignItems: "center",
+        //   padding: "0.5em",
+        //   flexWrap: "wrap"
+        // }}
       >
         <Button
           variant="contained"

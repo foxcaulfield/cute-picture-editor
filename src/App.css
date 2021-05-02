@@ -59,6 +59,16 @@ body {
   /* background: -webkit-linear-gradient(14deg, rgba(167,200,242,1) 23%, rgba(242,80,80,1) 100%); */
 }
 
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: white;
+  align-items: center;
+  padding: 0.5em;
+  flex-wrap: wrap;
+}
+
 .headerName {
   font-family: "Pacifico", cursive;
   /* background: -webkit-linear-gradient(14deg, rgba(167,200,242,1) 23%, rgba(242,80,80,1) 100%); */
@@ -75,6 +85,22 @@ body {
   font-size: 2em;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 600px) {
+  .headerName {
+    order: -1;
+    width: 100%;
+    /* align-self: flex-end;
+    justify-self: flex-end;
+    text-align: right;
+    align-items: flex-end; */
+    text-align: center;
+  }
+  .headerContainer {
+    /* justify-content: space-around; */
+    align-items: center;
+  }
 }
 
 .imageAndScalingContainer {

@@ -1,13 +1,30 @@
-## Cute picture editor
+# 🎨 Cute picture editor ✨
 
-Basic and cute picture editor biuld on React
+## About
+Basic and cute picture editor built with React, Typescript and Canvas 😏
 
 #Screenshots
+* **Browser**
+![](./screenshots/screenshotMain.png)
+
+* **Smartphones 📱**
+![](./screenshots/screenshotMainMobie.png)
 
 #Demo
 
-Try live version on [gh-pages]
+Try live version on [GitHub-Pages](https://foxcaulfield.github.io/cute-picture-editor/)
 
-# How to use
+## Technologies, libraries & services
 
-# Tecnologies & features
+Built with:
+
+-React
+-TypeScript
+-Canvas
+
+## Features
+
+- Fine filter tuning
+- Picture scaling
+- Uploading and saving pictures
+- Scale and filter reset
