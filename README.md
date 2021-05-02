@@ -9,8 +9,8 @@ Basic and cute picture editor built with React, Typescript and Canvas 😏
 **Browser** & **Smartphones 📱**
 
 <p float="left">
-  <img src="./screenshots/screenshotMain.png" height="100" />
-  <img src="./screenshots/screenshotMainMobile.png" height="100" /> 
+  <img src="./screenshots/screenshotMain.png" height="300" />
+  <img src="./screenshots/screenshotMainMobile.png" height="300" /> 
 </p>
 
 ## Demo
