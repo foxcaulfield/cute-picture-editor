@@ -8,7 +8,7 @@ Basic and cute picture editor built with React, Typescript and Canvas 😏
 ![](./screenshots/screenshotMain.png)
 
 * **Smartphones 📱**
-![](./screenshots/screenshotMainMobie.png)
+![](./screenshots/screenshotMainMobile.png)
 
 #Demo
 
