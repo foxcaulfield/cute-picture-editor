@@ -3,11 +3,12 @@
 ## About
 Basic and cute picture editor built with React, Typescript and Canvas 😏
 
-##Screenshots
-* **Browser** & **Smartphones 📱**
-![](./screenshots/screenshotMain.png) ![](./screenshots/screenshotMainMobile.png)
+## Screenshots
+ **Browser** | **Smartphones 📱**
+ --- | ---
+![](./screenshots/screenshotMain.png) | ![](./screenshots/screenshotMainMobile.png)
 
-##Demo
+## Demo
 
 Try live version on [GitHub-Pages](https://foxcaulfield.github.io/cute-picture-editor/)
 
